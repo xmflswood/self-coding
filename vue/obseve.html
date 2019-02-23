@@ -23,7 +23,6 @@
       })
     }
   }
-  var dep = new Dep
   var target = null
   function observe(data) {
     if (!data || typeof data !== 'object') return
@@ -33,6 +32,7 @@
   }
   function defineReactive(data, key, v) {
     observe(v)
+    var dep = new Dep()
     Object.defineProperty(data, key, {
       configurable: true,
       enumerable: true,

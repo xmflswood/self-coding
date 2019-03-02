@@ -23,7 +23,7 @@
       })
     }
   }
-  var target = null
+  Dep.target = null
   function observe(data) {
     if (!data || typeof data !== 'object') return
     Object.keys(data).forEach(k => {
@@ -37,8 +37,8 @@
       configurable: true,
       enumerable: true,
       get () {
-        if (target) {
-          dep.addSub(target)
+        if (Dep.target) {
+          dep.addSub(Dep.target)
         }
         return v
       },
@@ -57,13 +57,19 @@
       this.value = this.get()
     }
     get() {
-      target = this
-      let value = this.vm.data[this.exp]
-      target = null
+      Dep.target = this
+      let value = this.vm.data
+      this.exp.split('.').forEach(i => {
+        value = value[i]
+      })
+      Dep.target = null
       return value
     }
     update() {
-      let value = this.vm.data[this.exp]
+      let value = this.vm.data
+      this.exp.split('.').forEach(i => {
+        value = value[i]
+      })
       this.cb.call(this.vm, value)
     }
   }
@@ -72,7 +78,11 @@
       this.data = data
       observe(data)
       this.proxy()
-      el.innerHTML = data[exp]
+      let v = data
+      exp.split('.').forEach(i => {
+        v = v[i]
+      })
+      el.innerHTML = v
       new Watcher(this, exp, (v) => {
         el.innerHTML = v
       })
@@ -93,7 +103,9 @@
   }
   var el = document.getElementById('name')
   var vm = new VM({
-    name: 'woood'
-  }, el, 'name')
+    o: {
+      name: '123'
+    }
+  }, el, 'o.name')
 </script>
 </html>

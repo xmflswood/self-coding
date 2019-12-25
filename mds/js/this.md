@@ -67,3 +67,4 @@ fooReference = {
   - call / bind等（上面的方法不能解决）
   - new 最高级
   - strict 下是undefined 其他一般是window
+  - 匿名函数this指向全局

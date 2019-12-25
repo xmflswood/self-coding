@@ -55,6 +55,7 @@ fooReference = {
 ```javascript
   foo() // M = foo
   a.b.c() // M = a.b.c
+  c()() // M = c()
 ```
 
 ### Reference ?

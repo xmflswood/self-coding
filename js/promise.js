@@ -90,3 +90,18 @@ Promise.prototype.then = function (resolveCb, rejectCb) {
       })
     }
 }
+
+
+Promise.all = function (arr) {
+  return new Promise((resolve, reject) => {
+    let result = []
+    arr.forEach((promise, index) => {
+      promise.then((value) => {
+        result[index] = true
+        if (result.length === arr.length) {
+          resolve(value)
+        }
+      }, reject)  
+    })
+  })
+}

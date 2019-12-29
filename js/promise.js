@@ -67,16 +67,18 @@ Promise.prototype.then = function (resolveCb, rejectCb) {
     }
     if (this.state === P) {
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          this.resolveList.push(() => {
+        this.resolveList.push(() => {
+          setTimeout(() => {
             let result = resolveCb(this.value)
             if (result instanceof Promise) {
               result.then(resolve, reject)
             } else {
               resolve(result)
             }
-          })
-          this.rejectList.push(() => {
+          }, 0)
+        })
+        this.rejectList.push(() => {
+          setTimeout(() => {
             let result =  rejectCb(this.reason)
             if (result instanceof Promise) {
               result.then(resolve, reject)
@@ -84,7 +86,7 @@ Promise.prototype.then = function (resolveCb, rejectCb) {
               reject(result)
             }
           })
-        }, 0)
+        })
       })
     }
 }

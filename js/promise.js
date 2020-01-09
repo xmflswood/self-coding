@@ -97,9 +97,9 @@ Promise.all = function (arr) {
     let result = []
     arr.forEach((promise, index) => {
       promise.then((value) => {
-        result[index] = true
+        result[index] = value
         if (result.length === arr.length) {
-          resolve(value)
+          resolve(result)
         }
       }, reject)  
     })

@@ -2,6 +2,7 @@
 
 ### 箭头函数
 - 可以在上一行写 var self = this，箭头函数内部的this就是这个self
+- this不可被改变
 
 ### Types
 - ECMAScript 的类型分为语言类型和规范类型
